@@ -37,19 +37,13 @@ int main(int argc, char **argv)
 #pragma omp master
         initMatrix(MATRIX_SIZE, matrixA, matrixB, result);
 
-        // if (MATRIX_SIZE <= 5)
-        // printf("Matrix A\n");
-        // printMatrix(MATRIX_SIZE, matrixA);
-        // if (MATRIX_SIZE <= 5)
-        // printf("Matrix B\n");
-        // printMatrix(MATRIX_SIZE, matrixB);
+        printMatrix(MATRIX_SIZE, matrixA, "Matrix A");
+        printMatrix(MATRIX_SIZE, matrixB, "Matrix B");
         sample_start();
 
         multiplyMatrix(MATRIX_SIZE, matrixA, matrixB, result);
-        // if (MATRIX_SIZE <= 5)
-        // printf("Result matrix\n");
 
-        // printMatrix(MATRIX_SIZE, result);
+        printMatrix(MATRIX_SIZE, result, "Result Matrix");
         sample_stop();
         sample_end();
     }

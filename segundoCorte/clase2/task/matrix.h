@@ -3,7 +3,7 @@
 
 void initMatrix(int MATRIX_SIZE, double *matrixA, double *matrixB, double *result);
 
-void printMatrix(int MATRIX_SIZE, double *matrix);
+void printMatrix(int MATRIX_SIZE, double *matrix, char *matrixName);
 
 // void multiplyMatrix(int MATRIX_SIZE, double *matrixA, double *matrixB, double *result);
 

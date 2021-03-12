@@ -22,11 +22,12 @@ void initMatrix(int MATRIX_SIZE, double *matrixA, double *matrixB, double *resul
     }
 }
 
-void printMatrix(int MATRIX_SIZE, double *matrix)
+void printMatrix(int MATRIX_SIZE, double *matrix, char *matrixName)
 {
     int i, j;
     if (MATRIX_SIZE <= 5)
     {
+        printf("\n%s\n", matrixName);
         for (i = 0; i < MATRIX_SIZE; i++)
         {
             for (j = 0; j < MATRIX_SIZE; j++)
@@ -50,5 +51,5 @@ extern void sample_stop()
 
 extern void sample_end()
 {
-    printf("Execution time: %ld microsec\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
+    printf("\nExecution time: %ld microsec\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
 }
