@@ -2,16 +2,21 @@ COMPILER = gcc
 FLAGS = -pedantic -Wall -fopenmp
 OBJ = -c
 
+CONVENTIONAL = conventionalMatrixMultiplicationOMP
 TRANSPOSE = transposeMatrixMultiplicationOMP
 
-PROGS = conventionalMatrixMultiplicationOMP $(TRANSPOSE)
+PROGS = $(CONVENTIONAL) $(TRANSPOSE)
 
-all: conventionalMatrixMultiplicationOMP
+all: modules $(CONVENTIONAL) $(TRANSPOSE)
 
-conventionalMatrixMultiplicationOMP:
+modules:
 		$(COMPILER) $(FLAGS) $(OBJ) matrix.c
-		$(COMPILER) $(FLAGS) $(OBJ) $@.c
-		$(COMPILER) $(FLAGS) -o $@ $@.o matrix.o 
+
+$(CONVENTIONAL):
+		$(COMPILER) $(FLAGS) $(OBJ) $(CONVENTIONAL).c
+		$(COMPILER) $(FLAGS) -o $(CONVENTIONAL) $(CONVENTIONAL).o matrix.o 
+		
+$(TRANSPOSE):
 		$(COMPILER) $(FLAGS) $(OBJ) $(TRANSPOSE).c
 		$(COMPILER) $(FLAGS) -o $(TRANSPOSE) $(TRANSPOSE).o matrix.o 
 
