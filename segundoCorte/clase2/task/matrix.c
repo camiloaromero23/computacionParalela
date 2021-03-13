@@ -1,3 +1,14 @@
+/*
+UNIVERSIDAD SERGIO ARBOLEDA
+ESCUELA DE CIENCIAS EXACTAS E INGENIERÍA
+INGENIERÍA DE SISTEMAS Y TELECOMUNICACIONES
+
+AUTHORS: JUAN JOSÉ MONTENEGRO PULIDO & CAMILO ANDRÉS ROMERO MALDONADO
+EMAILS: juan.montenegro@correo.usa.edu.co & camiloa.romero@correo.usa.edu.co
+
+12/03/2021
+*/
+
 #include "matrix.h"
 #include <stdio.h>
 #include <stdlib.h>
