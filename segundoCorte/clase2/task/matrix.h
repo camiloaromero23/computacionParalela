@@ -12,7 +12,7 @@ EMAILS: juan.montenegro@correo.usa.edu.co & camiloa.romero@correo.usa.edu.co
 #ifndef MATRIX_H_INCLUDED
 #define MATRIX_H_INCLUDED
 
-void initMatrix(int MATRIX_SIZE, double *matrixA, double *matrixB, double *result);
+void initMatrix(int MATRIX_SIZE, double *matrixA, double *matrixB);
 
 void printMatrix(int MATRIX_SIZE, double *matrix, char *matrixName);
 
