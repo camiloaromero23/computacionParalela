@@ -11,13 +11,13 @@ To execute, run the following command:
 ### Conventional
 
 ``` console
-./conventionalMatrixMultiplicationOMP <Matrix size> <# of threads>
+./MM1c <Matrix size> <# of threads>
 ```
 
 ### Transpose
 
 ``` console
-./transposeMatrixMultiplicationOMP <Matrix size> <# of threads>
+./MM1f <Matrix size> <# of threads>
 ```
 
 ---
