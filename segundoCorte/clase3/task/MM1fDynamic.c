@@ -16,6 +16,8 @@ EMAILS: juan.montenegro@correo.usa.edu.co & camiloa.romero@correo.usa.edu.co
 
 void multiplyMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result);
 
+void transposeMatrix(int MATRIX_SIZE, double **matrix, double **transpose);
+
 int main(int argc, char **argv)
 {
   if (argc != 3)
@@ -32,12 +34,11 @@ int main(int argc, char **argv)
   argc--;
   argv++;
 
-  // Pointers declaration and assignation
-  double **matrixA = NULL, **matrixB = NULL, **result = NULL;
+  double **matrixA = NULL, **matrixB = NULL, **result = NULL, **transposeMatrixB = NULL;
 
-  // Dynamic memory space reservation for each matrix
   if ((matrixA = (double **)malloc(MATRIX_SIZE * sizeof(double *))) == NULL ||
       (matrixB = (double **)malloc(MATRIX_SIZE * sizeof(double *))) == NULL ||
+      (transposeMatrixB = (double **)malloc(MATRIX_SIZE * sizeof(double *))) == NULL ||
       (result = (double **)malloc(MATRIX_SIZE * sizeof(double *))) == NULL)
   {
     printf("Not enough memory\n");
@@ -48,6 +49,7 @@ int main(int argc, char **argv)
   {
     if ((matrixA[i] = (double *)malloc(MATRIX_SIZE * sizeof(double))) == NULL ||
         (matrixB[i] = (double *)malloc(MATRIX_SIZE * sizeof(double))) == NULL ||
+        (transposeMatrixB[i] = (double *)malloc(MATRIX_SIZE * sizeof(double))) == NULL ||
         (result[i] = (double *)malloc(MATRIX_SIZE * sizeof(double))) == NULL)
     {
       printf("Not enough memory\n");
@@ -59,35 +61,38 @@ int main(int argc, char **argv)
 #pragma omp parallel                // Declaration of Open MP pragma
   {
 
-#pragma omp master // Declaration of Open MP master
-    initDynamicMatrix(MATRIX_SIZE, matrixA, matrixB, result);
+#pragma omp master
+    initDynamicMatrixTranspose(MATRIX_SIZE, matrixA, matrixB, result, transposeMatrixB);
 
     printDynamicMatrix(MATRIX_SIZE, matrixA, "Matrix A"); // Uncomment to print matrix
     printDynamicMatrix(MATRIX_SIZE, matrixB, "Matrix B"); // Uncomment to print matrix
+
+    transposeMatrix(MATRIX_SIZE, matrixB, transposeMatrixB);                 // Transpose matrix execution
+    printDynamicMatrix(MATRIX_SIZE, transposeMatrixB, "Transpose Matrix B"); // Uncomment to print matrix
+
     sample_start();
 
-    multiplyMatrix(MATRIX_SIZE, matrixA, matrixB, result);
+    multiplyMatrix(MATRIX_SIZE, matrixA, transposeMatrixB, result);
 
+    printDynamicMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
     sample_stop();
+    sample_end();
   }
-  printDynamicMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
-  freeReservedMemory(MATRIX_SIZE, matrixA, matrixB, result);
-  sample_end();
+  freeReservedMemoryTranspose(MATRIX_SIZE, matrixA, matrixB, result, transposeMatrixB);
   return 0;
 }
 
 void multiplyMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result)
 {
   int i, j, k;
-#pragma omp for // Open MP pragma for declaration for parallelism
+#pragma omp for
   for (i = 0; i < MATRIX_SIZE; i++)
   {
     for (j = 0; j < MATRIX_SIZE; j++)
     {
-      double *auxMatrixA, *auxMatrixB; // Auxiliary Pointers to matrixes (Array) positions
+      double *auxMatrixA, *auxMatrixB;
       double sum = 0.0;
 
-      // auxMatrixA = *(matrixA + (i * MATRIX_SIZE)); // Assignment of the position of the matrixA in the main array for looping in it
       auxMatrixA = *(matrixA + i); // Assignment of the position of the matrixA in the main array for looping in it
       auxMatrixB = *(matrixB + j); // Assignment of the position of the matrixB in the main array for looping in it
 
@@ -97,6 +102,20 @@ void multiplyMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, double 
         sum += (*auxMatrixA * *auxMatrixB);
       }
       *(*(result + j) + i) = sum; // Assignment of sum to the result section of the main array
+    }
+  }
+}
+
+void transposeMatrix(int MATRIX_SIZE, double **matrix, double **transpose)
+{
+  int i, j;
+#pragma omp for // Open MP pragma for declaration for parallelism
+  for (i = 0; i < MATRIX_SIZE; i++)
+  {
+    for (j = 0; j < MATRIX_SIZE; j++)
+    {
+      *(*(transpose + j) + i) = *(*(matrix + i) + j);
+      // transpose[(j * MATRIX_SIZE) + i] = matrix[j + i * MATRIX_SIZE]; // Assignment of matrix transpose to the transpose matrix
     }
   }
 }
