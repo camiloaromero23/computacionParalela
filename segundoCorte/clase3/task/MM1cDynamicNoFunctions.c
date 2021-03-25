@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 
   // Pointers declaration and assignation
   double **matrixA = NULL, **matrixB = NULL, **result = NULL;
-  int i, j, k;
+  // int i, j, k;
 
   // Dynamic memory space reservation for each matrix
   if ((matrixA = (double **)malloc(MATRIX_SIZE * sizeof(double *))) == NULL ||
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  for (i = 0; i < MATRIX_SIZE; i++)
+  for (int i = 0; i < MATRIX_SIZE; i++)
   {
     if ((matrixA[i] = (double *)malloc(MATRIX_SIZE * sizeof(double))) == NULL ||
         (matrixB[i] = (double *)malloc(MATRIX_SIZE * sizeof(double))) == NULL ||
@@ -66,9 +66,9 @@ int main(int argc, char **argv)
     sample_start();
 
 #pragma omp for // Open MP pragma for declaration for parallelism
-    for (i = 0; i < MATRIX_SIZE; i++)
+    for (int i = 0; i < MATRIX_SIZE; i++)
     {
-      for (j = 0; j < MATRIX_SIZE; j++)
+      for (int j = 0; j < MATRIX_SIZE; j++)
       {
         double *auxMatrixA, *auxMatrixB; // Auxiliary Pointers to matrixes (Array) positions
         double sum = 0.0;
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
         auxMatrixA = *(matrixA + i); // Assignment of the position of the matrixA in the main array for looping in it
         auxMatrixB = *(matrixB + j); // Assignment of the position of the matrixB in the main array for looping in it
 
-        for (k = 0; k < MATRIX_SIZE; k++, auxMatrixA++, auxMatrixB++) // Increasing of the position of the pointers to matrixes
+        for (int k = 0; k < MATRIX_SIZE; k++, auxMatrixA++, auxMatrixB++) // Increasing of the position of the pointers to matrixes
         // for (k = MATRIX_SIZE; k > 0; k--, auxMatrixA++, auxMatrixB++) // Increasing of the position of the pointers to matrixes
         {
           sum += (*auxMatrixA * *auxMatrixB);
