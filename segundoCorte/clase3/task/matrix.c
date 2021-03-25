@@ -48,6 +48,23 @@ void initDynamicMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, doub
   }
 }
 
+// Dynamic matrix initialization
+void initDynamicMatrixTranspose(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result, double **transposeMatrixB)
+{
+
+  int i, j;
+  for (i = 0; i < MATRIX_SIZE; i++)
+  {
+    for (j = 0; j < MATRIX_SIZE; j++)
+    {
+      *(*(matrixA + j) + i) = 2.01 * (i + j);
+      *(*(matrixB + j) + i) = 3.01 * (i - j);
+      *(*(transposeMatrixB + j) + i) = 5.01;
+      *(*(result + j) + i) = 5.01;
+    }
+  }
+}
+
 // Frees up reserved memory space
 void freeReservedMemory(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result)
 {
@@ -62,6 +79,26 @@ void freeReservedMemory(int MATRIX_SIZE, double **matrixA, double **matrixB, dou
     free(result[i]);
   }
   free(matrixA);
+  free(matrixB);
+  free(result);
+}
+
+// Frees up reserved memory space
+void freeReservedMemoryTranspose(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result, double **transpose)
+{
+
+  int i;
+
+#pragma omp parallel for
+  for (i = 0; i < MATRIX_SIZE; i++)
+  {
+    free(matrixA[i]);
+    free(matrixB[i]);
+    free(result[i]);
+    free(transpose[i]);
+  }
+  free(matrixA);
+  free(transpose);
   free(matrixB);
   free(result);
 }
@@ -113,4 +150,5 @@ extern void sample_stop()
 extern void sample_end()
 {
   printf("\nExecution time: %ld microsec\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
+  // printf("\nExecution time: %ld second(s)\n", (end.tv_sec - start.tv_sec));
 }

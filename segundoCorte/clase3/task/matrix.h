@@ -16,11 +16,13 @@ void initMatrix(int MATRIX_SIZE, double *matrixA, double *matrixB);
 
 void initDynamicMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result);
 
-void printMatrix(int MATRIX_SIZE, double *matrix, char *matrixName);
+void initDynamicMatrixTranspose(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result, double **transposeMatrixB);
 
 void printDynamicMatrix(int MATRIX_SIZE, double **matrix, char *matrixName);
 
 void freeReservedMemory(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result);
+
+void freeReservedMemoryTranspose(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result, double **transpose);
 
 extern void sample_start();
 
