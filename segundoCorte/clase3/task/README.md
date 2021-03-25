@@ -1,5 +1,9 @@
 # Implementación y Documentación del Algoritmo Multiplicación de Matrices: Clásico (Filas x Columnas) y Matriz Transpuesta
 
+## TODO
+
+[] Fix pointers on transpose with dynamic matrix implementations
+
 To compile, run the following command:
 
 ``` console
