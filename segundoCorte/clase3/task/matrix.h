@@ -18,6 +18,8 @@ void initDynamicMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, doub
 
 void initDynamicMatrixTranspose(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result, double **transposeMatrixB);
 
+void printMatrix(int MATRIX_SIZE, double *matrix, char *matrixName);
+
 void printDynamicMatrix(int MATRIX_SIZE, double **matrix, char *matrixName);
 
 void freeReservedMemory(int MATRIX_SIZE, double **matrixA, double **matrixB, double **result);
