@@ -64,11 +64,11 @@ int main(int argc, char **argv)
 #pragma omp master
     initDynamicMatrixTranspose(MATRIX_SIZE, matrixA, matrixB, result, transposeMatrixB);
 
-    printDynamicMatrix(MATRIX_SIZE, matrixA, "Matrix A"); // Uncomment to print matrix
-    printDynamicMatrix(MATRIX_SIZE, matrixB, "Matrix B"); // Uncomment to print matrix
+    // printDynamicMatrix(MATRIX_SIZE, matrixA, "Matrix A"); // Uncomment to print matrix
+    // printDynamicMatrix(MATRIX_SIZE, matrixB, "Matrix B"); // Uncomment to print matrix
 
-    transposeMatrix(MATRIX_SIZE, matrixB, transposeMatrixB);                 // Transpose matrix execution
-    printDynamicMatrix(MATRIX_SIZE, transposeMatrixB, "Transpose Matrix B"); // Uncomment to print matrix
+    transposeMatrix(MATRIX_SIZE, matrixB, transposeMatrixB); // Transpose matrix execution
+    // printDynamicMatrix(MATRIX_SIZE, transposeMatrixB, "Transpose Matrix B"); // Uncomment to print matrix
 
     sample_start();
 
@@ -97,6 +97,7 @@ void multiplyMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, double 
       auxMatrixB = *(matrixB + j); // Assignment of the position of the matrixB in the main array for looping in it
 
       for (k = 0; k < MATRIX_SIZE; k++, auxMatrixA++, auxMatrixB++) // Increasing of the position of the pointers to matrixes
+      // for (k = 0; k < MATRIX_SIZE; k++, auxMatrixA++) // Increasing of the position of the pointers to matrixes
       // for (k = MATRIX_SIZE; k > 0; k--, auxMatrixA++, auxMatrixB++) // Increasing of the position of the pointers to matrixes
       {
         sum += (*auxMatrixA * *auxMatrixB);

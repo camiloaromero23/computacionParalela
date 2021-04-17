@@ -26,8 +26,8 @@ void initMatrix(int MATRIX_SIZE, double *matrixA, double *matrixB)
   {
     for (j = 0; j < MATRIX_SIZE; j++)
     {
-      matrixA[j + i * MATRIX_SIZE] = 2.01 * (i + j);
-      matrixB[j + i * MATRIX_SIZE] = 3.01 * (i - j);
+      matrixA[j + i * MATRIX_SIZE] = 2.2 * (i + j);
+      matrixB[j + i * MATRIX_SIZE] = 3.7 * (i - j);
     }
   }
 }
@@ -41,9 +41,9 @@ void initDynamicMatrix(int MATRIX_SIZE, double **matrixA, double **matrixB, doub
   {
     for (j = 0; j < MATRIX_SIZE; j++)
     {
-      *(*(matrixA + j) + i) = 2.01 * (i + j);
-      *(*(matrixB + j) + i) = 3.01 * (i - j);
-      *(*(result + j) + i) = 5.01;
+      *(*(matrixA + j) + i) = 2.2 * (i + j);
+      *(*(matrixB + j) + i) = 3.7 * (i + j);
+      *(*(result + j) + i) = 1.0;
     }
   }
 }
@@ -57,10 +57,10 @@ void initDynamicMatrixTranspose(int MATRIX_SIZE, double **matrixA, double **matr
   {
     for (j = 0; j < MATRIX_SIZE; j++)
     {
-      *(*(matrixA + j) + i) = 2.01 * (i + j);
-      *(*(matrixB + j) + i) = 3.01 * (i - j);
-      *(*(transposeMatrixB + j) + i) = 5.01;
-      *(*(result + j) + i) = 5.01;
+      *(*(matrixA + j) + i) = 2.2 * (i + j);
+      *(*(matrixB + j) + i) = 3.7 * (i + j);
+      *(*(transposeMatrixB + j) + i) = 1.0;
+      *(*(result + j) + i) = 1.0;
     }
   }
 }
@@ -149,6 +149,7 @@ extern void sample_stop()
 
 extern void sample_end()
 {
+  printf("\n%E\n", (double)((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
   printf("\nExecution time: %ld microsec\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
   // printf("\nExecution time: %ld second(s)\n", (end.tv_sec - start.tv_sec));
 }

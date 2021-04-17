@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 
     multiplyMatrix(MATRIX_SIZE, matrixA, transposeMatrixB, result);
 
-    // printMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
+    printMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
     sample_stop();
     sample_end();
   }
