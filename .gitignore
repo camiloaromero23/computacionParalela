@@ -1,7 +1,7 @@
 *
 !*/
 !*.[ch]
-!*.py
+!*.p[ly]
 !*.pyx
 !**/README.md
 !**/[Mm]akefile
