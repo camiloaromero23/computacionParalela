@@ -1,5 +1,7 @@
 *
 !*/
 !*.[ch]
+!*.py
+!*.pyx
 !**/README.md
 !**/[Mm]akefile
