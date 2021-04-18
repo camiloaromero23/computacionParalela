@@ -19,9 +19,9 @@ $N = 4;  # Número de Repeticiones
 # @benchmarks = ("benchmarkConventional"); # nombre de los ejecutables (benchmarks)
 @cores = ("1","2","4","8"); # Número de hilos de ejecución
 # $rand = 200;
-# @MatrizSize = ("600","800","1000","2000","4000","6000");   ### Dimensión de la matriz para Pthread 
+@sizes = ("600","800","1000","2000","4000","6000");   ### Dimensión de la matriz para Pthread 
 # @sizes = ("200","400");   ### Dimensión de la matriz para Pthread 
-@sizes = ("64","120","200");   ### Dimensión de la matriz para Pthread 
+# @sizes = ("64","120","200");   ### Dimensión de la matriz para Pthread 
 
 #@MatrizSizePthreads = ("400","600","800","1000");
 foreach $benchmark (@benchmarks){
