@@ -45,9 +45,9 @@ $(TRANSPOSE_2ROWS):
 		$(COMPILER) $(FLAGS) -o $@ $@.o matrix.o
 
 $(PTHREADS):
-		$(COMPILER) $(FLAGS_PTH) $(OBJ) matrixPth.c
-		$(COMPILER) $(FLAGS_PTH) $(OBJ) $@.c
-		$(COMPILER) $(FLAGS_PTH) -o $@ $@.o matrixPth.o
+		$(COMPILER)-9 $(FLAGS_PTH) $(OBJ) matrixPth.c
+		$(COMPILER)-9 $(FLAGS_PTH) $(OBJ) $@.c
+		$(COMPILER)-9 $(FLAGS_PTH) -o $@ $@.o matrixPth.o
 
 clean:
 		$(RM) $(PROGS) *.o
