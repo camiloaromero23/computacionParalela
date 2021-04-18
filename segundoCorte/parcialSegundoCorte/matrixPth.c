@@ -17,7 +17,7 @@
 #include <time.h>
 
 // 1. Función para inicializar las matrices
-void initMatrix(double **matrix, int matrixSize, int randomRange)
+void initMatrix(double **matrixA, double **result, int matrixSize)
 {
   int i, j;
 
@@ -27,7 +27,8 @@ void initMatrix(double **matrix, int matrixSize, int randomRange)
   {
     for (j = 0; j < matrixSize; j++)
     {
-      matrix[i][j] = rand() % (randomRange + 1);
+      matrixA[i][j] = 2.2 * (i + j);
+      matrixB[i][j] = 2.2 * (i + j);
     }
   }
 }

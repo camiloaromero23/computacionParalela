@@ -24,7 +24,7 @@ double **matrixA, **matrixB, **result;
 /******************** Declaración de funciones de la interfaz **********************/
 
 // 1. Función para inicializar las martices de tamaño matrixSize.
-void initMatrix(double **matrix, int matrixSize, int randomRange);
+void initMatrix(double **matrix, double **result, int matrixSize);
 
 // 2. Reserva los espacios en memoria donde va a almacenar las matrices
 double **allocateMatrix(int size);

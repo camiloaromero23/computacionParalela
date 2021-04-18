@@ -13,38 +13,42 @@ chomp($path0);
 $T = index($path0,"T")-1;
 #$Path = substr($path0,0,$T);
 $Path = $path0;
-
+# print "$Path \n";
 $N = 4;  # Número de Repeticiones
-@Ejecutable = ("benchmarkCommon","benchmarkPthreads"); # nombre de los ejecutables (benchmarks)
+@benchmarks = ("benchmarkConventional","benchmarkPthreads","benchmarkTranspose","benchmarkTranspose2","benchmarkTransposeDynamic"); # nombre de los ejecutables (benchmarks)
+# @benchmarks = ("benchmarkConventional"); # nombre de los ejecutables (benchmarks)
 @cores = ("1","2","4","8"); # Número de hilos de ejecución
-$rand = 200;
-@MatrizSizeOrdinaria = ("400","600","800");  ### Dimensión de la matriz para Ordinaria
-@MatrizSizePthreads = ("400","600","800","1000","2000","4000");   ### Dimensión de la matriz para Pthread 
+# $rand = 200;
+# @MatrizSize = ("600","800","1000","2000","4000","6000");   ### Dimensión de la matriz para Pthread 
+# @sizes = ("200","400");   ### Dimensión de la matriz para Pthread 
+@sizes = ("64","120","200");   ### Dimensión de la matriz para Pthread 
+
 #@MatrizSizePthreads = ("400","600","800","1000");
+foreach $benchmark (@benchmarks){
+  
+  foreach $size (@sizes){
 
-foreach $size (@MatrizSizeOrdinaria){
-     $exe = @Ejecutable[0];
-     $file = "$Path/"."outputs/"."$exe"."-Size"."$size"."-rand-"."$rand";
-     #print "$file \n";
-     for($i=0; $i<$N;  $i++){
-	  system("$Path/$exe $size $rand  >> $file");
-          #print "$Path/$exe $size $rand\n" ;
-     }
-     close($file);
-}
-
-foreach $size (@MatrizSizePthreads){
-     $exe = @Ejecutable[1];
+     $exe = $benchmark;
      
      foreach $c (@cores) {
-          $file = "$Path/"."outputs/"."$exe"."-Size"."$size"."-cores-"."$c"."-rand-"."$rand";
-          #print "$file \n";
-          for($i=0; $i<$N;  $i++){
-	       system("$Path/$exe $size $c $rand >> $file");
-               #print "$Path/$exe $size $c $rand\n" ;
-          }
+
+
+      $file = "outputs/$exe".".csv";
+    #  $file = "$Path/"."outputs/"."$exe"."-Size"."$size"."-.csv";
+    #  print "file: $file \n";
+	  system("echo $exe-Size-$size-cores-$c >> $file");
+     for($i=0; $i<$N;  $i++){
+    #  print "Entra \n";
+    #  print "$Path/$exe $size $c \n";
+	  system("$Path/$exe $size $c >> $file");
+          #print "$Path/$exe $size $rand\n" ;
+     }
+	  system("echo >> $file");
      close($file);
      }
+  }
 }
 
-	exit(1);
+
+
+	exit(0);

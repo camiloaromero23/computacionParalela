@@ -57,9 +57,9 @@ int main(int argc, char **argv)
     multiplyMatrix(MATRIX_SIZE, matrixA, matrixB, result);
 
     // printMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
-    sample_stop();
-    sample_end();
   }
+  sample_stop();
+  sample_end();
   return 0;
 }
 

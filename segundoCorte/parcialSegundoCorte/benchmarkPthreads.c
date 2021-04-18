@@ -24,15 +24,14 @@ int main(int argc, char *argv[])
   long int executionTime;
   pthread_t *threads;
 
-  if (argc != 4)
+  if (argc != 3)
   {
-    fprintf(stderr, "%s <matrix size> <number of threads> <random range>\n", argv[0]);
+    fprintf(stderr, "%s <matrix size> <number of threads>\n", argv[0]);
     return -1;
   }
 
   size = atoi(argv[1]);
   threadsNumber = atoi(argv[2]);
-  int randomRange = atoi(argv[3]);
 
   if (size % threadsNumber != 0)
   {
@@ -47,8 +46,7 @@ int main(int argc, char *argv[])
   matrixB = allocateMatrix(size);
   result = allocateMatrix(size);
 
-  initMatrix(matrixA, size, randomRange);
-  initMatrix(matrixB, size, randomRange);
+  initMatrix(matrixA, matrixB, size);
 
   gettimeofday(&tstart, NULL);
 
@@ -73,7 +71,7 @@ int main(int argc, char *argv[])
 
   // printf("Number of MPI ranks: 0\tNumber of threads: %d\tExecution time: %ld microsec\n",
   //    threadsNumber, executionTime);
-  printf("Number of threads: %d\tExecution time: %ld microsec\n", threadsNumber, executionTime);
+  printf("%ld,", executionTime);
 
   return 0;
 }

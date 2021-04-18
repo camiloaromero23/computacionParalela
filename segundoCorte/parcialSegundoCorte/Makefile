@@ -51,3 +51,6 @@ $(PTHREADS):
 
 clean:
 		$(RM) $(PROGS) *.o
+
+clean_out:
+		$(RM) ./outputs/*

@@ -58,15 +58,14 @@ int main(int argc, char **argv)
 
     transposeMatrix(MATRIX_SIZE, matrixB, transposeMatrixB); // Transpose matrix execution
     // printMatrix(MATRIX_SIZE, transposeMatrixB, "Transpose Matrix B"); // Uncomment to print matrix
-
     sample_start();
 
     multiplyMatrix(MATRIX_SIZE, matrixA, transposeMatrixB, result);
 
-    printMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
-    sample_stop();
-    sample_end();
+    // printMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
   }
+  sample_stop();
+  sample_end();
   return 0;
 }
 

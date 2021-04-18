@@ -62,16 +62,15 @@ int main(int argc, char **argv)
 #pragma omp master // Declaration of Open MP master
     initDynamicMatrix(MATRIX_SIZE, matrixA, matrixB, result);
 
-    printDynamicMatrix(MATRIX_SIZE, matrixA, "Matrix A"); // Uncomment to print matrix
-    printDynamicMatrix(MATRIX_SIZE, matrixB, "Matrix B"); // Uncomment to print matrix
+    // printDynamicMatrix(MATRIX_SIZE, matrixA, "Matrix A"); // Uncomment to print matrix
+    // printDynamicMatrix(MATRIX_SIZE, matrixB, "Matrix B"); // Uncomment to print matrix
     sample_start();
 
     multiplyMatrix(MATRIX_SIZE, matrixA, matrixB, result);
-
-    sample_stop();
   }
-  printDynamicMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
+  // printDynamicMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
   freeReservedMemory(MATRIX_SIZE, matrixA, matrixB, result);
+  sample_stop();
   sample_end();
   return 0;
 }

@@ -65,10 +65,10 @@ int main(int argc, char **argv)
     multiplyMatrix(MATRIX_SIZE, matrixA, matrixB, result);
     // multiplyMatrix(MATRIX_SIZE, matrixA, transposeMatrixB, result);
 
-    sample_stop();
-    sample_end();
-    printMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
+    // printMatrix(MATRIX_SIZE, result, "Result Matrix"); // Uncomment to print matrix
   }
+  sample_stop();
+  sample_end();
   return 0;
 }
 

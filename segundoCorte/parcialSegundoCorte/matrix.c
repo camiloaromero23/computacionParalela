@@ -149,7 +149,7 @@ extern void sample_stop()
 
 extern void sample_end()
 {
-  printf("\n%E\n", (double)((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
-  printf("\nExecution time: %ld microsec\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
+  // printf("\n%E\n", (double)((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
+  printf("%ld,", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)));
   // printf("\nExecution time: %ld second(s)\n", (end.tv_sec - start.tv_sec));
 }
