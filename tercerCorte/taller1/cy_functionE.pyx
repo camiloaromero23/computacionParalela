@@ -6,11 +6,10 @@ cdef extern from "math.h":
     double exp(double x) nogil
     double pow(double x, double y) nogil
     
-ctypedef np.int_t DTYPE_t
-ctypedef np.double_t DTYPE_t2
-def cy_rbf_network(np.ndarray[DTYPE_t2, ndim=2] X, np.ndarray[DTYPE_t2, ndim=1] beta, int theta):
+ctypedef np.double_t DTYPE_t
+def cy_rbf_network(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] beta, int theta):
     cdef int N
-    cdef np.ndarray[DTYPE_t2, ndim=1] Y
+    cdef np.ndarray[DTYPE_t, ndim=1] Y
 
     N = X.shape[0]
     Y = np.zeros(N)
@@ -18,7 +17,7 @@ def cy_rbf_network(np.ndarray[DTYPE_t2, ndim=2] X, np.ndarray[DTYPE_t2, ndim=1] 
     
     return Y
 
-cdef void doY(np.ndarray[DTYPE_t2, ndim=2] X, np.ndarray[DTYPE_t2, ndim=1] Y, np.ndarray[DTYPE_t2, ndim=1] beta, int theta, int N) :
+cdef void doY(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] Y, np.ndarray[DTYPE_t, ndim=1] beta, int theta, int N) :
     cdef int i, j, d, D 
     cdef double r, value2, value, first, second, betaVal
 
