@@ -19,7 +19,7 @@ def cy_rbf_network(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] be
 
 cdef void doY(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] Y, np.ndarray[DTYPE_t, ndim=1] beta, int theta, int N) :
     cdef int i, j, d, D 
-    cdef double r, value2, value, first, second, betaVal
+    cdef double r 
 
     D = X.shape[1]
 
@@ -27,12 +27,7 @@ cdef void doY(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] Y, np.n
         for j in range(N):
             r = 0
             for d in range(D):
-                first = X[j, d]
-                second = X[i, d]
-                value = first - second
-                r += pow(value, 2)
+                r += pow(X[j, d] - X[i, d], 2)
             r = pow(r, 0.5)
-            value2 = exp(-pow((r * theta), 2))
-            betaVal = beta[j]
-            Y[i] += betaVal * value2
+            Y[i] += beta[j] * exp(-pow((r * theta), 2))
 

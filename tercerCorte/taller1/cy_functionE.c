@@ -2009,7 +2009,7 @@ static PyObject *__pyx_pf_12cy_functionE_cy_rbf_network(CYTHON_UNUSED PyObject *
  * 
  * cdef void doY(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] Y, np.ndarray[DTYPE_t, ndim=1] beta, int theta, int N) :             # <<<<<<<<<<<<<<
  *     cdef int i, j, d, D
- *     cdef double r, value2, value, first, second, betaVal
+ *     cdef double r
  */
 
 static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_Y, PyArrayObject *__pyx_v_beta, int __pyx_v_theta, int __pyx_v_N) {
@@ -2018,11 +2018,6 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
   int __pyx_v_d;
   int __pyx_v_D;
   double __pyx_v_r;
-  double __pyx_v_value2;
-  double __pyx_v_value;
-  double __pyx_v_first;
-  double __pyx_v_second;
-  double __pyx_v_betaVal;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_X;
   __Pyx_Buffer __pyx_pybuffer_X;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_Y;
@@ -2042,6 +2037,8 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
   Py_ssize_t __pyx_t_10;
   Py_ssize_t __pyx_t_11;
   int __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  Py_ssize_t __pyx_t_14;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2075,7 +2072,7 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
   __pyx_pybuffernd_beta.diminfo[0].strides = __pyx_pybuffernd_beta.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_beta.diminfo[0].shape = __pyx_pybuffernd_beta.rcbuffer->pybuffer.shape[0];
 
   /* "cy_functionE.pyx":24
- *     cdef double r, value2, value, first, second, betaVal
+ *     cdef double r
  * 
  *     D = X.shape[1]             # <<<<<<<<<<<<<<
  * 
@@ -2112,7 +2109,7 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
  *         for j in range(N):
  *             r = 0             # <<<<<<<<<<<<<<
  *             for d in range(D):
- *                 first = X[j, d]
+ *                 r += pow(X[j, d] - X[i, d], 2)
  */
       __pyx_v_r = 0.0;
 
@@ -2120,8 +2117,8 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
  *         for j in range(N):
  *             r = 0
  *             for d in range(D):             # <<<<<<<<<<<<<<
- *                 first = X[j, d]
- *                 second = X[i, d]
+ *                 r += pow(X[j, d] - X[i, d], 2)
+ *             r = pow(r, 0.5)
  */
       __pyx_t_7 = __pyx_v_D;
       __pyx_t_8 = __pyx_t_7;
@@ -2131,9 +2128,9 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
         /* "cy_functionE.pyx":30
  *             r = 0
  *             for d in range(D):
- *                 first = X[j, d]             # <<<<<<<<<<<<<<
- *                 second = X[i, d]
- *                 value = first - second
+ *                 r += pow(X[j, d] - X[i, d], 2)             # <<<<<<<<<<<<<<
+ *             r = pow(r, 0.5)
+ *             Y[i] += beta[j] * exp(-pow((r * theta), 2))
  */
         __pyx_t_10 = __pyx_v_j;
         __pyx_t_11 = __pyx_v_d;
@@ -2150,105 +2147,60 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
           __Pyx_RaiseBufferIndexError(__pyx_t_12);
           __PYX_ERR(0, 30, __pyx_L1_error)
         }
-        __pyx_v_first = (*__Pyx_BufPtrStrided2d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_11, __pyx_pybuffernd_X.diminfo[1].strides));
-
-        /* "cy_functionE.pyx":31
- *             for d in range(D):
- *                 first = X[j, d]
- *                 second = X[i, d]             # <<<<<<<<<<<<<<
- *                 value = first - second
- *                 r += pow(value, 2)
- */
-        __pyx_t_11 = __pyx_v_i;
-        __pyx_t_10 = __pyx_v_d;
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_14 = __pyx_v_d;
         __pyx_t_12 = -1;
-        if (__pyx_t_11 < 0) {
-          __pyx_t_11 += __pyx_pybuffernd_X.diminfo[0].shape;
-          if (unlikely(__pyx_t_11 < 0)) __pyx_t_12 = 0;
-        } else if (unlikely(__pyx_t_11 >= __pyx_pybuffernd_X.diminfo[0].shape)) __pyx_t_12 = 0;
-        if (__pyx_t_10 < 0) {
-          __pyx_t_10 += __pyx_pybuffernd_X.diminfo[1].shape;
-          if (unlikely(__pyx_t_10 < 0)) __pyx_t_12 = 1;
-        } else if (unlikely(__pyx_t_10 >= __pyx_pybuffernd_X.diminfo[1].shape)) __pyx_t_12 = 1;
+        if (__pyx_t_13 < 0) {
+          __pyx_t_13 += __pyx_pybuffernd_X.diminfo[0].shape;
+          if (unlikely(__pyx_t_13 < 0)) __pyx_t_12 = 0;
+        } else if (unlikely(__pyx_t_13 >= __pyx_pybuffernd_X.diminfo[0].shape)) __pyx_t_12 = 0;
+        if (__pyx_t_14 < 0) {
+          __pyx_t_14 += __pyx_pybuffernd_X.diminfo[1].shape;
+          if (unlikely(__pyx_t_14 < 0)) __pyx_t_12 = 1;
+        } else if (unlikely(__pyx_t_14 >= __pyx_pybuffernd_X.diminfo[1].shape)) __pyx_t_12 = 1;
         if (unlikely(__pyx_t_12 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_12);
-          __PYX_ERR(0, 31, __pyx_L1_error)
+          __PYX_ERR(0, 30, __pyx_L1_error)
         }
-        __pyx_v_second = (*__Pyx_BufPtrStrided2d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_11, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_10, __pyx_pybuffernd_X.diminfo[1].strides));
-
-        /* "cy_functionE.pyx":32
- *                 first = X[j, d]
- *                 second = X[i, d]
- *                 value = first - second             # <<<<<<<<<<<<<<
- *                 r += pow(value, 2)
- *             r = pow(r, 0.5)
- */
-        __pyx_v_value = (__pyx_v_first - __pyx_v_second);
-
-        /* "cy_functionE.pyx":33
- *                 second = X[i, d]
- *                 value = first - second
- *                 r += pow(value, 2)             # <<<<<<<<<<<<<<
- *             r = pow(r, 0.5)
- *             value2 = exp(-pow((r * theta), 2))
- */
-        __pyx_v_r = (__pyx_v_r + pow(__pyx_v_value, 2.0));
+        __pyx_v_r = (__pyx_v_r + pow(((*__Pyx_BufPtrStrided2d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_11, __pyx_pybuffernd_X.diminfo[1].strides)) - (*__Pyx_BufPtrStrided2d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_14, __pyx_pybuffernd_X.diminfo[1].strides))), 2.0));
       }
 
-      /* "cy_functionE.pyx":34
- *                 value = first - second
- *                 r += pow(value, 2)
+      /* "cy_functionE.pyx":31
+ *             for d in range(D):
+ *                 r += pow(X[j, d] - X[i, d], 2)
  *             r = pow(r, 0.5)             # <<<<<<<<<<<<<<
- *             value2 = exp(-pow((r * theta), 2))
- *             betaVal = beta[j]
+ *             Y[i] += beta[j] * exp(-pow((r * theta), 2))
+ * 
  */
       __pyx_v_r = pow(__pyx_v_r, 0.5);
 
-      /* "cy_functionE.pyx":35
- *                 r += pow(value, 2)
+      /* "cy_functionE.pyx":32
+ *                 r += pow(X[j, d] - X[i, d], 2)
  *             r = pow(r, 0.5)
- *             value2 = exp(-pow((r * theta), 2))             # <<<<<<<<<<<<<<
- *             betaVal = beta[j]
- *             Y[i] += betaVal * value2
- */
-      __pyx_v_value2 = exp((-pow((__pyx_v_r * __pyx_v_theta), 2.0)));
-
-      /* "cy_functionE.pyx":36
- *             r = pow(r, 0.5)
- *             value2 = exp(-pow((r * theta), 2))
- *             betaVal = beta[j]             # <<<<<<<<<<<<<<
- *             Y[i] += betaVal * value2
+ *             Y[i] += beta[j] * exp(-pow((r * theta), 2))             # <<<<<<<<<<<<<<
  * 
  */
-      __pyx_t_10 = __pyx_v_j;
+      __pyx_t_14 = __pyx_v_j;
       __pyx_t_7 = -1;
-      if (__pyx_t_10 < 0) {
-        __pyx_t_10 += __pyx_pybuffernd_beta.diminfo[0].shape;
-        if (unlikely(__pyx_t_10 < 0)) __pyx_t_7 = 0;
-      } else if (unlikely(__pyx_t_10 >= __pyx_pybuffernd_beta.diminfo[0].shape)) __pyx_t_7 = 0;
+      if (__pyx_t_14 < 0) {
+        __pyx_t_14 += __pyx_pybuffernd_beta.diminfo[0].shape;
+        if (unlikely(__pyx_t_14 < 0)) __pyx_t_7 = 0;
+      } else if (unlikely(__pyx_t_14 >= __pyx_pybuffernd_beta.diminfo[0].shape)) __pyx_t_7 = 0;
       if (unlikely(__pyx_t_7 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_7);
-        __PYX_ERR(0, 36, __pyx_L1_error)
+        __PYX_ERR(0, 32, __pyx_L1_error)
       }
-      __pyx_v_betaVal = (*__Pyx_BufPtrStrided1d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_beta.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_beta.diminfo[0].strides));
-
-      /* "cy_functionE.pyx":37
- *             value2 = exp(-pow((r * theta), 2))
- *             betaVal = beta[j]
- *             Y[i] += betaVal * value2             # <<<<<<<<<<<<<<
- * 
- */
-      __pyx_t_10 = __pyx_v_i;
+      __pyx_t_13 = __pyx_v_i;
       __pyx_t_7 = -1;
-      if (__pyx_t_10 < 0) {
-        __pyx_t_10 += __pyx_pybuffernd_Y.diminfo[0].shape;
-        if (unlikely(__pyx_t_10 < 0)) __pyx_t_7 = 0;
-      } else if (unlikely(__pyx_t_10 >= __pyx_pybuffernd_Y.diminfo[0].shape)) __pyx_t_7 = 0;
+      if (__pyx_t_13 < 0) {
+        __pyx_t_13 += __pyx_pybuffernd_Y.diminfo[0].shape;
+        if (unlikely(__pyx_t_13 < 0)) __pyx_t_7 = 0;
+      } else if (unlikely(__pyx_t_13 >= __pyx_pybuffernd_Y.diminfo[0].shape)) __pyx_t_7 = 0;
       if (unlikely(__pyx_t_7 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_7);
-        __PYX_ERR(0, 37, __pyx_L1_error)
+        __PYX_ERR(0, 32, __pyx_L1_error)
       }
-      *__Pyx_BufPtrStrided1d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_Y.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_Y.diminfo[0].strides) += (__pyx_v_betaVal * __pyx_v_value2);
+      *__Pyx_BufPtrStrided1d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_Y.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_Y.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_12cy_functionE_DTYPE_t *, __pyx_pybuffernd_beta.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_beta.diminfo[0].strides)) * exp((-pow((__pyx_v_r * __pyx_v_theta), 2.0))));
     }
   }
 
@@ -2257,7 +2209,7 @@ static void __pyx_f_12cy_functionE_doY(PyArrayObject *__pyx_v_X, PyArrayObject *
  * 
  * cdef void doY(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] Y, np.ndarray[DTYPE_t, ndim=1] beta, int theta, int N) :             # <<<<<<<<<<<<<<
  *     cdef int i, j, d, D
- *     cdef double r, value2, value, first, second, betaVal
+ *     cdef double r
  */
 
   /* function exit code */
