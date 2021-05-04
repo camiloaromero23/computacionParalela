@@ -20,6 +20,6 @@ cy_functionE.rbf_network(X, beta, theta)
 cy_total_time = time.time() - start
 
 speedUp = round(total_time/cy_total_time, 3)
-print("Python time: {} \n".format(total_time))
-print("Cython time: {} \n".format(cy_total_time))
-print("SpeedUp: {} \n".format(speedUp))
+print(f"Python time: {total_time} \n")
+print(f"Cython time: {cy_total_time} \n")
+print(f"SpeedUp: {speedUp} \n")
