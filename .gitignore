@@ -5,3 +5,4 @@
 !*.pyx
 !**/README.md
 !**/[Mm]akefile
+!**/.gitignore
