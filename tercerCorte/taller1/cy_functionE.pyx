@@ -7,7 +7,7 @@ cdef extern from "math.h":
     double pow(double x, double y) nogil
     
 ctypedef np.double_t DTYPE_t
-def cy_rbf_network(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] beta, int theta):
+def rbf_network(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] beta, int theta):
     cdef int N, D, i, j, d
     cdef np.ndarray[DTYPE_t, ndim=1] Y
     cdef double r 
