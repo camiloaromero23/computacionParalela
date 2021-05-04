@@ -8,20 +8,14 @@ cdef extern from "math.h":
     
 ctypedef np.double_t DTYPE_t
 def cy_rbf_network(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] beta, int theta):
-    cdef int N
+    cdef int N, D, i, j, d
     cdef np.ndarray[DTYPE_t, ndim=1] Y
-
-    N = X.shape[0]
-    Y = np.zeros(N)
-    doY(X, Y, beta, theta, N)
-    
-    return Y
-
-cdef void doY(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] Y, np.ndarray[DTYPE_t, ndim=1] beta, int theta, int N) :
-    cdef int i, j, d, D 
     cdef double r 
 
+    N = X.shape[0]
     D = X.shape[1]
+
+    Y = np.zeros(N)
 
     for i in range(N):
         for j in range(N):
@@ -31,3 +25,4 @@ cdef void doY(np.ndarray[DTYPE_t, ndim=2] X, np.ndarray[DTYPE_t, ndim=1] Y, np.n
             r = pow(r, 0.5)
             Y[i] += beta[j] * exp(-pow((r * theta), 2))
 
+    return Y
