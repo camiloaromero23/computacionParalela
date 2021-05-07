@@ -1,24 +1,32 @@
 #cython: language_level=3
 
 #import math
+
+cimport cython
+
 cdef extern from "math.h":
     double cos(double x) nogil
-    double sen(double x) nogil
+    double sin(double x) nogil
     double atan2(double x, double y) nogil
     double sqrt(double x) nogil
     double pow(double x, double y) nogil
 #from turtle import *
 
 # The gravitational constant G
-G = 6.67428e-11
+cdef double G = 6.67428e-11
 
 # Assumed scale: 100 pixels = 1AU.
-AU = (149.6e6 * 1000)     # 149.6 million km, in meters.
-SCALE = 250 / AU
+"""
+cdef public double AU = (149.6e6 * 1000)     # 149.6 million km, in meters.
+@cython.cdivision(True)
+cdef double get_scale(double AU):
+    return 250 / AU
 
+cdef double SCALE = get_scale(AU)
+"""
 
 # class Body(Turtle):
-class Body():
+cdef class Body(object):
     """Subclass of Turtle representing a gravitationally-acting body.
 
     Extra attributes:
@@ -27,16 +35,26 @@ class Body():
     px, py: x, y positions in m
     """
 
-    name = 'Body'
-    mass = None
-    vx = vy = 0.0
-    px = py = 0.0
+    cdef public double vx, vy, px, py, mass
+    cdef public str name
 
-    def attraction(self, other):
+    def __init__(Body self):
+        self.name = 'Body'
+        self.mass = 0.0
+        self.vx = 0.0
+        self.vy = 0.0
+        self.px = 0.0
+        self.py = 0.0
+
+    @cython.cdivision(True)
+    cdef tuple attraction(Body self, Body other):
         """(Body): (fx, fy)
 
         Returns the force exerted upon this body by the other body.
         """
+
+        cdef double fx, fy
+
         # Report an error if the other object is the same as this one.
         if self is other:
             raise ValueError("Attraction of object %r to itself requested"
@@ -47,7 +65,7 @@ class Body():
         ox, oy = other.px, other.py
         dx = (ox-sx)
         dy = (oy-sy)
-        d = math.sqrt(dx**2 + dy**2)
+        d = sqrt(dx**2 + dy**2)
 
         # Report an error if the distance is zero; otherwise we'll
         # get a ZeroDivisionError exception further down.
@@ -56,42 +74,34 @@ class Body():
                              % (self.name, other.name))
 
         # Compute the force of attraction
-        f = G * self.mass * other.mass / (d**2)
+        cdef double f = G * self.mass * other.mass / pow(d,2)
 
         # Compute the direction of the force.
-        theta = math.atan2(dy, dx)
-        fx = math.cos(theta) * f
-        fy = math.sin(theta) * f
+        theta = atan2(dy, dx)
+        fx = cos(theta) * f
+        fy = sin(theta) * f
         return fx, fy
 
-
-def update_info(step, bodies):
-    """(int, [Body])
-
-    Displays information about the status of the simulation.
-    """
-    print('Step #{}'.format(step))
-    for body in bodies:
-        s = '{:<8}  Pos.={:>6.2f} {:>6.2f} Vel.={:>10.3f} {:>10.3f}'.format(
-            body.name, body.px/AU, body.py/AU, body.vx, body.vy)
-        print(s)
-    print()
-
-
-def loop(bodies):
+@cython.cdivision(True)
+def loop(list bodies):
     """([Body])
 
     Never returns; loops through the simulation, updating the
     positions of all the provided bodies.
     """
-    timestep = 24*3600  # One day
+    cdef int timestep = 24*3600  # One day
 
     # for body in bodies:
     #   body.penup()
     #  body.hideturtle()
 
-    step = 1
+    cdef int step = 1
 
+    cdef double total_fx, total_fy, fx, fy
+
+    cdef dict force
+
+    cdef Body body, other
     """   365 steps in order to complete earth's cycle   """
 
     while (step <= 365 * 1000):
@@ -126,30 +136,4 @@ def loop(bodies):
             # body.dot(3)
 
 
-def main():
-    sun = Body()
-    sun.name = 'Sun'
-    sun.mass = 1.98892 * 10**30
-#    sun.pencolor('yellow')
 
-    earth = Body()
-    earth.name = 'Earth'
-    earth.mass = 5.9742 * 10**24
-    earth.px = -1*AU
-    earth.vy = 29.783 * 1000            # 29.783 km/sec
-#    earth.pencolor('blue')
-
-    # Venus parameters taken from
-    # http://nssdc.gsfc.nasa.gov/planetary/factsheet/venusfact.html
-    venus = Body()
-    venus.name = 'Venus'
-    venus.mass = 4.8685 * 10**24
-    venus.px = 0.723 * AU
-    venus.vy = -35.02 * 1000
-#    venus.pencolor('red')
-
-    loop([sun, earth, venus])
-
-
-if __name__ == '__main__':
-    main()
