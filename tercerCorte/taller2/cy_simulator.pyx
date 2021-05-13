@@ -65,7 +65,7 @@ cdef class Body(object):
         ox, oy = other.px, other.py
         dx = (ox-sx)
         dy = (oy-sy)
-        d = sqrt(dx**2 + dy**2)
+        d = sqrt(pow(dx, 20) + pow(dy, 2))
 
         # Report an error if the distance is zero; otherwise we'll
         # get a ZeroDivisionError exception further down.
