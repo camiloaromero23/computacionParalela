@@ -2,14 +2,18 @@ from __future__ import print_function
 import time
 import argparse
 
-from heat import init_fields, write_field, iterate
+# from heat import init_fields, write_field, iterate
+import heat
+import cy_heat
+
+""" Included the heat_lib argument in order to make the function reusable """
 
 
-def main(input_file='bottle.dat', a=0.5, dx=0.1, dy=0.1,
+def main(heat_lib, input_file='bottle.dat', a=0.5, dx=0.1, dy=0.1,
          timesteps=200, image_interval=4000):
 
     # Initialise the temperature field
-    field, field0 = init_fields(input_file)
+    field, field0 = heat_lib.init_fields(input_file)
 
     print("Heat equation solver")
     print("Diffusion constant: {}".format(a))
@@ -22,34 +26,51 @@ def main(input_file='bottle.dat', a=0.5, dx=0.1, dy=0.1,
                                                       image_interval))
 
     # Plot/save initial field
-    write_field(field, 0)
+    heat_lib.write_field(field, 0)
     # Iterate
     t0 = time.time()
-    iterate(field, field0, a, dx, dy, timesteps, image_interval)
+    heat_lib.iterate(field, field0, a, dx, dy, timesteps, image_interval)
     t1 = time.time()
     # Plot/save final field
-    write_field(field, timesteps)
+    heat_lib.write_field(field, timesteps)
 
     print("Simulation finished in {0} s".format(t1-t0))
 
 
 if __name__ == '__main__':
+    """ 
+    Defined two dictionaries, one for referencing the libraries and the other one for the bottles' files.
 
-    # Process command line arguments
-    parser = argparse.ArgumentParser(description='Heat equation')
-    parser.add_argument('-dx', type=float, default=0.01,
-                        help='grid spacing in x-direction')
-    parser.add_argument('-dy', type=float, default=0.01,
-                        help='grid spacing in y-direction')
-    parser.add_argument('-a', type=float, default=0.5,
-                        help='diffusion constant')
-    parser.add_argument('-n', type=int, default=200,
-                        help='number of time steps')
-    parser.add_argument('-i', type=int, default=4000,
-                        help='image interval')
-    parser.add_argument('-f', type=str, default='bottle.dat',
-                        help='input file')
+    This in order to stay DRY
+    """
+    lib_dict = {
+        'heat': heat,
+        'cy_heat': cy_heat,
+    }
+    bottles_dict = {
+        'bottle': 'bottle.dat',
+        'bottle_medium': 'bottle_medium.dat',
+        'bottle_large': 'bottle_large.dat',
+    }
 
-    args = parser.parse_args()
+    for lib in lib_dict:
+        for bottle in bottles_dict:
+            # Process command line arguments
+            parser = argparse.ArgumentParser(description='Heat equation')
+            parser.add_argument('-dx', type=float, default=0.01,
+                                help='grid spacing in x-direction')
+            parser.add_argument('-dy', type=float, default=0.01,
+                                help='grid spacing in y-direction')
+            parser.add_argument('-a', type=float, default=0.5,
+                                help='diffusion constant')
+            parser.add_argument('-n', type=int, default=200,
+                                help='number of time steps')
+            parser.add_argument('-i', type=int, default=4000,
+                                help='image interval')
+            parser.add_argument('-f', type=str, default=bottles_dict[bottle],
+                                help='input file')
 
-    main(args.f, args.a, args.dx, args.dy, args.n, args.i)
+            args = parser.parse_args()
+
+            main(lib_dict[lib], args.f, args.a,
+                 args.dx, args.dy, args.n, args.i)
