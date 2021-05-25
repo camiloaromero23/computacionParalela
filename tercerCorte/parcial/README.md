@@ -9,7 +9,7 @@ make
 python3 -m cProfile -o outputs/profile_{ext_name}.dat
 ```
 
-> For correctly profiling Cython or Python, it is important to ***comment/uncomment*** the lines ***#50/51*** of the ***heat_main.py*** file depending on which one you are going to work with (They're mutually interchangeable)
+> For correctly profiling Cython or Python implementations, it is important to ***comment/uncomment*** the lines ***#50/51*** of the ***heat_main.py*** file depending on which one you are going to work with (They're mutually exclusive)
 
 To profile, run the following command:
 
