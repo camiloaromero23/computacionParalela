@@ -17,6 +17,14 @@ To profile, run the following command:
 python3 -m pstats outputs/profile_{ext_name}.dat
 ```
 
+Inside the profiling cli, run the following commands to correctly profile your execution:
+
+``` console
+strip
+sort cumtime
+stats {#output_calls}
+```
+
 To clean workspace run the following command:
 
 ``` console
