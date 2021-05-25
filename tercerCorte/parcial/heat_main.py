@@ -52,8 +52,8 @@ if __name__ == '__main__':
     }
     bottles_dict = {
         'bottle': 'bottle.dat',
-        # 'bottle_medium': 'bottle_medium.dat',
-        # 'bottle_large': 'bottle_large.dat',
+        'bottle_medium': 'bottle_medium.dat',
+        'bottle_large': 'bottle_large.dat',
     }
     for lib in lib_dict:
         for bottle in bottles_dict:
