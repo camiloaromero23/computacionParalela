@@ -2,7 +2,7 @@ bottle.dat #0 in 25498493500 ns
 bottle.dat #1 in 25755286500 ns
 bottle.dat #2 in 25952219000 ns
 bottle.dat #3 in 25397063100 ns
-bottle_medium.dat #0 in 135638391500 ns
+bottle_medium.dat #0 in 96763839150 ns
 bottle_medium.dat #1 in 96564597400 ns
 bottle_medium.dat #2 in 96850970300 ns
 bottle_medium.dat #3 in 96682748500 ns
